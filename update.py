@@ -10,10 +10,8 @@ def update(n, L, dist, model, prop, k, m):
     position_plus_t1 = np.zeros(n)
     counter = 0
     save_positions = [position]  
+    sqrt_machine_epsilon = np.sqrt(np.finfo(np.float64).eps)
     while any(np.around(position_plus_t1,3) != np.around(position,3)):
-#   Grejer för att testa Proportion Open
-#        if all(np.around(position_plus_t1,3) == np.around(position,3)):
-#            print('klart')
         counter = counter + 1
         N = np.zeros(n)
         nrN = np.zeros(n)
@@ -26,7 +24,6 @@ def update(n, L, dist, model, prop, k, m):
             r_old = r
         if model == "Proportion open":
             r = r_old
-        print("r", r)
       # Find neighbors to the right  
         for i in range(n):
             if r[i] == 0:
@@ -34,7 +31,7 @@ def update(n, L, dist, model, prop, k, m):
                 nrN[i] = nrN[i] + 1
                 continue
             j = i
-            while j < n and position[j] - position[i] <= r[i]:
+            while j < n and position[j] - position[i] <= r[i] + sqrt_machine_epsilon:
                 N[i] = N[i] + position[j]
                 nrN[i] = nrN[i] + 1
                 j = j + 1              
@@ -45,7 +42,7 @@ def update(n, L, dist, model, prop, k, m):
                 nrN[i] = nrN[i] + 1
                 continue
             j = i
-            while j >= 0 and position[i] - position[j] <= r[i]:
+            while j >= 0 and position[i] - position[j] <= r[i] + sqrt_machine_epsilon:
                 N[i] = N[i] + position[j]
                 nrN[i] = nrN[i] + 1
                 j = j - 1      
@@ -61,5 +58,6 @@ def update(n, L, dist, model, prop, k, m):
     save_positions = np.delete(save_positions,counter,0)
 
     return save_positions, counter, r
+
 
 #update(14, 4, 'U(0,L)', 'Proporition closed')

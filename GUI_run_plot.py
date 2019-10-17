@@ -12,11 +12,16 @@ def run_plot():
     if model.get() == 'Chose model':
         print('Chose model and run again.')
         return
+   
     s, counter, r = update(int(e1.get()), int(e2.get()), str(distribution.get()), str(model.get()), float(e3.get()), float(e4.get()), float(e5.get()))
+#    if counter == 1:
+#        s = [s, s]
+    print("s broh", s)
+    print("lenlen", len(s))
     if c.get() == 1:
         # Plot radii at t = 0    
         start_position = start(int(e1.get()), int(e2.get()), str(distribution.get()))
-        rad = radius(int(e1.get()), int(e2.get()), float(e4.get()), float(e5.get()), str(model.get()), float(e3.get()), start_position, index_openminded)
+        rad = radius(int(e1.get()), int(e2.get()), float(e4.get()), float(e5.get()), str(model.get()), float(e3.get()), start_position)
         rad_fig = plt.figure('Radii at t = 0')
         ax = rad_fig.add_subplot(111)
         line, = ax.plot(start_position, rad, lw=2)
@@ -89,7 +94,6 @@ def model_chosen(*args):
             e3.grid_remove()   
             e3label = tk.Label(master,text="", anchor="w", width=12).grid(row=4)
         model.trace("w", remove_widgets)
-        
         # Add and remove values in order to run update (row 12) with all entries
         e4 = tk.Entry(master, width=20)
         e4.insert(10, 0.5)
@@ -123,7 +127,7 @@ def model_chosen(*args):
             e4label = tk.Label(master,text="", anchor="w", width=12).grid(row=4)
             e5label = tk.Label(master,text="", anchor="w", width=12).grid(row=5)
         model.trace("w", remove_widgets)
-    elif t == 'Closed towards 0':
+    elif t == 'Open right':
         # Add and remove values in order to run update (row 12) with all entries
         e3 = tk.Entry(master, width=20)
         e3.insert(10, 0.5)
