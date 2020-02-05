@@ -1,4 +1,4 @@
-function update_proportion_open(opinions, L, model, dist, prop_o, k, m, counter)
+function update_p(opinions, L, model, dist, prop_o, k, m, counter, r)
     n = length(opinions)
     l_N  = 1
     r_N = 1
@@ -6,34 +6,23 @@ function update_proportion_open(opinions, L, model, dist, prop_o, k, m, counter)
     r_N_previous = r_N
     previous_opinion_sum = opinions[1]
     epsilon = sqrt(eps())
-    #epsilon = 0
     new_opinions = zeros(n)
 
-    if counter == 1
-        #r = collect(1:n) - collect(1:n)
-        r = zeros(n)
-        while sum(r) < round(n*prop_o, digits = 0)
-            global r[rand(1:n)] = Int(1)
-        end
-        global r_prop = r
-    else
-        global r = r_prop
-    end
     for i in 1:n
         if r[i] == 0
             new_opinions[i] = opinions[i]
         else
-            if opinions[i] - opinions[1] < r[i] + epsilon
+            if opinions[i] - opinions[1] <= r[i] + epsilon
                 l_N = 1
             else
-                while opinions[i] - opinions[l_N] > r[i] + epsilon
+                while opinions[i] - opinions[l_N] >= r[i] + epsilon
                     l_N = l_N + 1
                 end
             end
-            if opinions[n] - opinions[i] < r[i] + epsilon
+            if opinions[n] - opinions[i] <= r[i] + epsilon
                 r_N = n
             else
-                while opinions[r_N] - opinions[i] < r[i] + epsilon
+                while opinions[r_N] - opinions[i] <= r[i] + epsilon
                     r_N = r_N + 1
                 end
                 r_N = r_N - 1

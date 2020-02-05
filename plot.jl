@@ -1,6 +1,6 @@
-#using Pkg
-#Pkg.add("PyPlot")
-#using PyPlot
+using Pkg
+Pkg.add("PyPlot")
+using PyPlot
 PyPlot.clf()
 rows = size(d)[1]
 columns = size(d)[2]
@@ -10,8 +10,10 @@ for i in 1:rows
     y = (d[i,1:end-1])
     plt.plot(x, y, linewidth=2.0, linestyle="-")
 end
+
 plt.legend()
 gcf()
+#savefig("C:\\Users\\johan\\OneDrive\\Dokument\\Opinion Dynamics\\Julia\\n6.png")
 
 #=
 if rows < 1e3

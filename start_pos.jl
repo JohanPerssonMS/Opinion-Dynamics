@@ -10,4 +10,4 @@ function start_pos(dist, n, L)
     end
     return opinions
 end
-start_pos("equi",4,2)
+start_pos("unif",1000000,9)
